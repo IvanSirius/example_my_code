@@ -1,3 +1,12 @@
+# Данный код предназначен для парсинга данных с сайта autodoc.ru через внутренний api сайта
+# Собираются номера(OEM, артикулы, sku) запчастей для ТО. Каждому номеру соответствует марка, модель, и т.д.
+# Данные собираются в MySQL базу функцией insert_to_sql
+# Конфиденциальные данные хранятся в файле local_settings
+# Для предотвражения срабатывания блокировки используются случайные User_Agent и время меджу запросами sleep(randint(a, b))
+# Логирование обеспечивается функцией log_to_file, данные записываются в txt файл (разницы с csv не замечено)
+# Есть функция send_telegram для отправки сообщения об ошибки в мессенджер, но исключения не проработаны
+
+
 import requests
 from fake_useragent import UserAgent
 from mysql.connector import connect, Error # mysql
@@ -37,6 +46,7 @@ def insert_to_sql(table):
             
     except Error as e:
         print(e)
+        send_telegram(e)
 
 
 # send message to telegram
