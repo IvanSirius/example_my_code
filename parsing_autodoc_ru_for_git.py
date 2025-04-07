@@ -100,6 +100,7 @@ if __name__ == "__main__":
                 date_new = datetime.datetime.now()
                 time = str(date_new - date_now)
                 log_to_file('{}; ERROR; {}\n'.format(time, brand.get('name')))
+                send_telegram('{}; ERROR; {}\n'.format(time, brand.get('name')))
                 continue
                 
         for model in list_models.json():
@@ -111,6 +112,7 @@ if __name__ == "__main__":
                 date_new = datetime.datetime.now()
                 time = str(date_new - date_now)
                 log_to_file('{}; ERROR; {}; {}\n'.format(time, brand.get('name'), model.get('name')))
+                send_telegram('{}; ERROR; {}; {}\n'.format(time, brand.get('name'), model.get('name')))
                 continue
                 
             for modification in list_modification.json()['modifications']:
@@ -127,6 +129,7 @@ if __name__ == "__main__":
                                                                model.get('name'),
                                                                modification.get('name')
                                                               ))
+                    send_telegram('ERROR')
                     continue
                 
                 list_for_DB = []
